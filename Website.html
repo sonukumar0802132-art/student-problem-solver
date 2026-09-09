@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Selection Post Phase 14 (Matriculation Level) Mock Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Hind', 'Inter', sans-serif;
+            user-select: none;
+        }
+        .q-status-not-visited { background-color: #e5e7eb; color: #374151; }
+        .q-status-not-answered { background-color: #ef4444; color: white; border-radius: 50% 50% 0 0; }
+        .q-status-answered { background-color: #22c55e; color: white; border-radius: 0 0 50% 50%; }
+        .q-status-marked { background-color: #a855f7; color: white; border-radius: 50%; }
+        .q-status-marked-answered { background-color: #a855f7; color: white; border-radius: 50%; position: relative; }
+        .q-status-marked-answered::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 6px;
+            height: 6px;
+            background-color: #22c55e;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 flex flex-col min-h-screen">
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="fixed inset-0 bg-slate-900 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 md:p-8 text-center border border-slate-200">
+            <div class="inline-flex p-3 bg-blue-100 text-blue-700 rounded-2xl mb-4">
+                <i class="fa-solid fa-[#fa-graduation-cap] text-3xl"></i>
+                <i class="fa-solid fa-graduation-cap text-3xl"></i>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">SSC Selection Post Phase 14 (2026)</h1>
+            <h2 class="text-lg font-semibold text-blue-600 mb-6">Matriculation Level Mock Test - 01</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 text-left">
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="text-xs text-slate-500 block">कुल प्रश्न</span>
+                    <span class="text-lg font-bold text-slate-700">100</span>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="text-xs text-slate-500 block">कुल समय</span>
+                    <span class="text-lg font-bold text-slate-700">60 मिनट</span>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="text-xs text-slate-500 block">कुल अंक</span>
+                    <span class="text-lg font-bold text-slate-700">200</span>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <span class="text-xs text-slate-500 block">नकारात्मक अंक</span>
+                    <span class="text-lg font-bold text-red-500">-0.50</span>
+                </div>
+            </div>
+
+            <div class="text-left bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-sm text-amber-800">
+                <h3 class="font-bold mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info"></i> मुख्य निर्देश:
+                </h3>
+                <ul class="list-disc list-inside space-leading-relaxed space-y-1">
+                    <li>परीक्षा में 4 विषय हैं (प्रत्येक 25 प्रश्न, 50 अंक)।</li>
+                    <li>प्रत्येक सही उत्तर पर <strong>+2 अंक</strong> और गलत पर <strong>-0.50 अंक</strong> मिलेगा।</li>
+                    <li>समय समाप्त होने पर टेस्ट स्वतः सबमिट हो जाएगा।</li>
+                    <li>सबमिट करने के बाद आपको पूरा विश्लेषण और समाधान मिलेगा।</li>
+                </ul>
+            </div>
+
+            <button onclick="startTest()" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-xl shadow-lg transition transform active:scale-95">
+                परीक्षण शुरू करें (Start Test)
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Exam Interface -->
+    <div id="exam-interface" class="hidden flex-col h-screen overflow-hidden">
+        <!-- Header -->
+        <header class="bg-slate-800 text-white px-4 py-3 flex justify-between items-center shadow-md">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-600 px-3 py-1 rounded font-bold text-sm">SSC Phase 14</div>
+                <h1 class="font-semibold text-sm md:text-base hidden sm:block">Matriculation Level Official Mock</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-600">
+                    <i class="fa-regular fa-clock text-amber-400"></i>
+                    <span id="timer" class="font-mono text-lg font-bold text-amber-400">60:00</span>
+                </div>
+                <button onclick="confirmSubmit()" class="bg-red-600 hover:bg-red-700 px-4 py-1.5 rounded-lg text-sm font-bold transition">
+                    सबमिट करें
+                </button>
+            </div>
+        </header>
+
+        <!-- Section Bar -->
+        <nav class="bg-white border-b border-slate-200 px-4 flex gap-2 overflow-x-auto text-sm font-medium">
+            <button onclick="switchSection(0)" id="sec-btn-0" class="py-3 px-4 border-b-2 border-blue-600 text-blue-600 font-bold whitespace-nowrap">
+                1. General Intelligence & Reasoning
+            </button>
+            <button onclick="switchSection(1)" id="sec-btn-1" class="py-3 px-4 border-b-2 border-transparent text-slate-600 hover:text-slate-900 whitespace-nowrap">
+                2. General Awareness
+            </button>
+            <button onclick="switchSection(2)" id="sec-btn-2" class="py-3 px-4 border-b-2 border-transparent text-slate-600 hover:text-slate-900 whitespace-nowrap">
+                3. Quantitative Aptitude
+            </button>
+            <button onclick="switchSection(3)" id="sec-btn-3" class="py-3 px-4 border-b-2 border-transparent text-slate-600 hover:text-slate-900 whitespace-nowrap">
+                4. English Language
+            </button>
+        </nav>
+
+        <!-- Main Body -->
+        <div class="flex-1 flex overflow-hidden">
+            <!-- Left: Question Area -->
+            <main class="flex-1 flex flex-col bg-white overflow-y-auto p-4 md:p-6 border-r border-slate-200">
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span id="q-num-display" class="font-bold text-lg text-slate-700">प्रश्न 1:</span>
+                        <span id="pyq-tag" class="hidden bg-amber-100 text-amber-800 text-xs px-2 py-0.5 rounded font-bold border border-amber-300">
+                            <i class="fa-solid fa-star text-amber-500"></i> PYQ
+                        </span>
+                    </div>
+                    <div class="text-xs text-slate-500">
+                        अंक: <span class="text-green-600 font-bold">+2.0</span> | <span class="text-red-500 font-bold">-0.50</span>
+                    </div>
+                </div>
+
+                <div id="question-text" class="text-slate-800 text-base md:text-lg mb-6 leading-relaxed font-medium">
+                    <!-- Question dynamically loaded -->
+                </div>
+
+                <div id="options-container" class="space-y-3 mb-6">
+                    <!-- Options dynamically loaded -->
+                </div>
+
+                <!-- Footer Action Buttons -->
+                <div class="mt-auto pt-4 border-t border-slate-200 flex flex-wrap gap-2 justify-between items-center bg-white">
+                    <div class="flex gap-2">
+                        <button onclick="markForReview()" class="px-4 py-2 bg-purple-100 text-purple-700 hover:bg-purple-200 text-sm font-semibold rounded-lg transition">
+                            मार्क फॉर रिव्यू
+                        </button>
+                        <button onclick="clearResponse()" class="px-4 py-2 bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-semibold rounded-lg transition">
+                            उत्तर साफ़ करें
+                        </button>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="prevQuestion()" id="prev-btn" class="px-4 py-2 bg-slate-200 text-slate-700 hover:bg-slate-300 text-sm font-semibold rounded-lg transition">
+                            पिछला
+                        </button>
+                        <button onclick="saveAndNext()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition shadow">
+                            सेव और अगला
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right: Question Palette sidebar -->
+            <aside id="palette-sidebar" class="w-72 bg-slate-50 p-4 flex-col gap-4 overflow-y-auto hidden md:flex">
+                <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-sm text-xs space-y-2">
+                    <h3 class="font-bold text-slate-700 mb-1 border-b pb-1">प्रश्न स्थिति (Palette Legend)</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="flex items-center gap-2"><span class="w-5 h-5 rounded flex items-center justify-center text-xs bg-gray-200">1</span> उत्तर नहीं दिया</div>
+                        <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-b-full flex items-center justify-center text-xs bg-red-500 text-white">2</span> नहीं चुना</div>
+                        <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-t-full flex items-center justify-center text-xs bg-green-500 text-white">3</span> उत्तर दिया</div>
+                        <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-full flex items-center justify-center text-xs bg-purple-500 text-white">4</span> समीक्षा हेतु</div>
+                    </div>
+                </div>
+
+                <div class="flex-1 bg-white p-3 rounded-lg border border-slate-200 shadow-sm flex flex-col">
+                    <h3 class="font-bold text-slate-700 text-sm mb-3">प्रश्न पैलेट</h3>
+                    <div id="palette-grid" class="grid grid-cols-5 gap-2 overflow-y-auto max-h-80 p-1">
+                        <!-- 25 Buttons for active section -->
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="hidden min-h-screen bg-slate-100 p-4 md:p-8">
+        <div class="max-w-5xl mx-auto space-y-6">
+            <!-- Summary Banner -->
+            <div class="bg-white rounded-2xl shadow-md p-6 border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase">परीक्षा परिणाम</span>
+                    <h1 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2">SSC Selection Post Phase 14 Performance Analysis</h1>
+                    <p class="text-slate-500 text-sm mt-1">Matriculation Level Mock Test - Overall Summary</p>
+                </div>
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-2xl text-center min-w-[200px] shadow-lg">
+                    <span class="text-xs uppercase tracking-wider opacity-80 font-bold">कुल अंक</span>
+                    <div class="text-4xl font-extrabold mt-1" id="res-total-score">0 / 200</div>
+                    <span class="text-xs mt-1 block opacity-90" id="res-accuracy-main">Accuracy: 0%</span>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-slate-500 text-sm font-medium">सही उत्तर</div>
+                    <div class="text-2xl font-bold text-green-600 mt-1" id="res-correct">0</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-slate-500 text-sm font-medium">गलत उत्तर</div>
+                    <div class="text-2xl font-bold text-red-500 mt-1" id="res-wrong">0</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-slate-500 text-sm font-medium">छोड़े गए प्रश्न</div>
+                    <div class="text-2xl font-bold text-slate-500 mt-1" id="res-skipped">0</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-slate-500 text-sm font-medium">सटीकता (Accuracy)</div>
+                    <div class="text-2xl font-bold text-indigo-600 mt-1" id="res-accuracy">0%</div>
+                </div>
+            </div>
+
+            <!-- Sectional Performance Table -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-pie text-blue-600"></i> अनुभाग-वार प्रदर्शन (Section-wise Performance)
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b bg-slate-50 text-slate-600 text-xs uppercase font-bold">
+                                <th class="p-3">विषय (Section)</th>
+                                <th class="p-3">सही</th>
+                                <th class="p-3">गलत</th>
+                                <th class="p-3">छोड़े</th>
+                                <th class="p-3">अंक (Score)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="section-score-body" class="text-sm font-semibold text-slate-700">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Weak Areas Analysis -->
+            <div class="bg-red-50 border border-red-200 rounded-2xl p-6">
+                <h3 class="text-lg font-bold text-red-800 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> आपके कमजोर क्षेत्र (Weak Topics)
+                </h3>
+                <div id="weak-topics-container" class="flex flex-wrap gap-2 mt-3">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Detailed Solutions Accordion -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-blue-600"></i> प्रश्न समाधान और व्याख्या (Detailed Solutions)
+                </h3>
+                <div id="solutions-container" class="space-y-6">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions Data Array (100 Questions)
+        const mockData = [
+            // --- SECTION 1: REASONING (Q1 - Q25) ---
+            {
+                id: 1, sec: 0, pyq: true, topic: "Alphabet Series",
+                q: "दी गई श्रृंखला में प्रश्न चिन्ह (?) के स्थान पर क्या आएगा?<br><b>AK, EO, IS, MW, ?</b>",
+                opts: ["QA", "RA", "QB", "PB"],
+                ans: 0,
+                exp: "A(+4) -> E(+4) -> I(+4) -> M(+4) -> Q<br>K(+4) -> O(+4) -> S(+4) -> W(+4) -> A.<br>अतः अगला पद QA है।"
+            },
+            {
+                id: 2, sec: 0, pyq: false, topic: "Coding-Decoding",
+                q: "यदि किसी निश्चित कूट भाषा में <b>MIND</b> को <b>KGLB</b> लिखा जाता है, तो उसी कूट में <b>DIAGRAM</b> को क्या लिखा जाएगा?",
+                opts: ["BGYEPYK", "BGWEPYK", "BGWEPYI", "CGWEPYK"],
+                ans: 1,
+                exp: "प्रत्येक अक्षर से -2 किया गया है:<br>D(-2)=B, I(-2)=G, A(-2)=W, G(-2)=E, R(-2)=P, A(-2)=Y, M(-2)=K."
+            },
+            {
+                id: 3, sec: 0, pyq: true, topic: "Analogy",
+                q: "उस विकल्प का चयन करें जो तीसरे पद से उसी प्रकार संबंधित है जैसे दूसरा पद पहले पद से संबंधित है:<br><b>भारत : रुपये :: जापान : ?</b>",
+                opts: ["डॉलर", "येन", "टका", "युआन"],
+                ans: 1,
+                exp: "भारत की मुद्रा रुपये है, उसी प्रकार जापान की आधिकारिक मुद्रा 'येन' है।"
+            },
+            {
+                id: 4, sec: 0, pyq: false, topic: "Number Series",
+                q: "दी गई संख्या श्रृंखला में लुप्त संख्या ज्ञात कीजिए:<br><b>12, 14, 18, 26, 42, ?</b>",
+                opts: ["64", "74", "84", "92"],
+                ans: 1,
+                exp: "अंतर का क्रम +2, +4, +8, +16 (2 की घात) है।<br>अतः अगला अंतर +32 होगा। 42 + 32 = 74."
+            },
+            {
+                id: 5, sec: 0, pyq: true, topic: "Syllogism",
+                q: "कथन:<br>1. सभी पेन पेंसिल हैं।<br>2. कुछ पेंसिल रबर हैं।<br>निष्कर्ष:<br>I. कुछ पेन रबर हैं।<br>II. कुछ रबर पेंसिल हैं।",
+                opts: ["केवल निष्कर्ष I अनुसरण करता है", "केवल निष्कर्ष II अनुसरण करता है", "दोनों अनुसरण करते हैं", "कोई अनुसरण नहीं करता"],
+                ans: 1,
+                exp: "निष्कर्ष II (कुछ रबर पेंसिल हैं) कथन 2 का प्रत्यक्ष रूपांतरण है, अतः यह सत्य है। पेन और रबर के बीच कोई सीधा संबंध निश्चित नहीं है।"
+            },
+            {
+                id: 6, sec: 0, pyq: false, topic: "Blood Relation",
+                q: "A, B की बहन है। C, B की माँ है। D, C का पिता है। E, D की माँ है। A का D से क्या संबंध है?",
+                opts: ["दादी", "नातिन (पोती)", "बेटी", "चाची"],
+                ans: 1,
+                exp: "C, A और B दोनों की माँ है। D, C का पिता है, तो D A का नाना है। इसलिए A, D की नातिन (पोती/Granddaughter) है।"
+            },
+            {
+                id: 7, sec: 0, pyq: true, topic: "Direction Test",
+                q: "सुरेश पूर्व की ओर 10 किमी चलता है, फिर दाएँ मुड़कर 5 किमी चलता है। पुनः दाएँ मुड़कर 10 किमी चलता है। वह प्रारंभिक बिंदु से किस दिशा में और कितनी दूरी पर है?",
+                opts: ["उत्तर, 5 किमी", "दक्षिण, 5 किमी", "पूर्व, 10 किमी", "पश्चिम, 5 किमी"],
+                ans: 1,
+                exp: "10 किमी पूर्व जाने के बाद दाएँ (दक्षिण) 5 किमी चलता है, फिर दाएँ (पश्चिम) 10 किमी लौटता है। वह प्रारंभिक स्थान से ठीक दक्षिण दिशा में 5 किमी दूर है।"
+            },
+            {
+                id: 8, sec: 0, pyq: false, topic: "Classification",
+                q: "चार विकल्पों में से विषम (Odd) को चुनिए:",
+                opts: ["तांबा", "जस्ता", "पीतल", "एल्यूमीनियम"],
+                ans: 2,
+                exp: "तांबा, जस्ता और एल्यूमीनियम शुद्ध धातुएँ हैं, जबकि पीतल (Brass) एक मिश्र धातु है।"
+            },
+            {
+                id: 9, sec: 0, pyq: true, topic: "Venn Diagram",
+                q: "वह वेन आरेख चुनें जो दिए गए वर्गों के बीच संबंध को सबसे अच्छे से दर्शाता है:<br><b>महिलाएँ, माँ, शिक्षिका</b>",
+                opts: ["सभी माँ महिलाएँ हैं, और कुछ महिलाएँ व माँ शिक्षिकाएँ हैं", "तीनों बिल्कुल अलग हैं", "शिक्षिका माँ का हिस्सा है", "कोई नहीं"],
+                ans: 0,
+                exp: "सभी माँ 'महिलाएँ' के अंतर्गत आती हैं। कुछ महिलाएँ और कुछ माँ 'शिक्षिकाएँ' हो सकती हैं।"
+            },
+            {
+                id: 10, sec: 0, pyq: false, topic: "Dictionary Order",
+                q: "निम्नलिखित शब्दों को अंग्रेजी शब्दकोश के अनुसार व्यवस्थित कीजिए:<br>1. Present <br>2. Primary <br>3. Prepare <br>4. Previous",
+                opts: ["3, 1, 4, 2", "1, 3, 4, 2", "3, 4, 1, 2", "2, 3, 1, 4"],
+                ans: 0,
+                exp: "शब्दकोश क्रम: Prepare (3) -> Present (1) -> Previous (4) -> Primary (2)."
+            },
+            {
+                id: 11, sec: 0, pyq: true, topic: "Mathematical Operations",
+                q: "यदि '+' का अर्थ '-', '-' का अर्थ '×', '×' का अर्थ '÷' और '÷' का अर्थ '+' है, तो दिए गए व्यंजक का मान क्या होगा?<br><b>15 × 3 ÷ 10 - 2 + 5 = ?</b>",
+                opts: ["20", "22", "18", "25"],
+                ans: 0,
+                exp: "चिह्न बदलने पर: 15 ÷ 3 + 10 × 2 - 5 = 5 + 20 - 5 = 20."
+            },
+            {
+                id: 12, sec: 0, pyq: false, topic: "Missing Number",
+                q: "दिए गए मैट्रिक्स में लुप्त संख्या (?) ज्ञात कीजिए:<br>3 &nbsp; 4 &nbsp; 7<br>5 &nbsp; 1 &nbsp; 6<br>8 &nbsp; 5 &nbsp; ?",
+                opts: ["11", "13", "14", "15"],
+                ans: 1,
+                exp: "प्रत्येक पंक्ति में पहले दो पदों का योग तीसरा पद है: 3+4=7, 5+1=6, इसलिए 8+5=13."
+            },
+            {
+                id: 13, sec: 0, pyq: true, topic: "Seating Arrangement",
+                q: "पांच मित्र A, B, C, D, E एक पंक्ति में उत्तर की ओर मुख करके बैठे हैं। C, A के तुरंत बाएँ है। E, D के दाएँ दूसरे स्थान पर है। B किसी एक सिरे पर है। यदि A मध्य में है, तो D कहाँ बैठा है?",
+                opts: ["बाएँ सिरे पर", "दाएँ सिरे पर", "मध्य में", "C के तुरंत दाएँ"],
+                ans: 0,
+                exp: "क्रम: D, C, A, E, B बनता है। अतः D बाएँ सिरे पर बैठा है।"
+            },
+            {
+                id: 14, sec: 0, pyq: false, topic: "Paper Cutting",
+                q: "एक वर्गाकार कागज़ को मोड़कर काटा जाता है। खोलने पर वह कैसा दिखेगा?",
+                opts: ["चारों कोनों पर छेद", "मध्य में एक वर्ग", "4 छोटे वृत्त", "कोई नहीं"],
+                ans: 0,
+                exp: "कोनों पर कट लगाने पर कागज़ खोलने पर चारों कोनों पर आकृतियाँ दिखाई देंगी।"
+            },
+            {
+                id: 15, sec: 0, pyq: true, topic: "Mirror Image",
+                q: "शब्द <b>'SUPER'</b> का समतल दर्पण में प्रतिबिम्ब (Mirror Image) क्या होगा जब दर्पण दाएँ रखा जाए?",
+                opts: ["ЯƎ9UƧ", "REPUS", "ЯEPUƧ", "SUPER"],
+                ans: 0,
+                exp: "दर्पण दाएँ रखने पर वर्ण विपरीत क्रम में और उल्टे दिखाई देंगे: ЯƎ9UƧ."
+            },
+            {
+                id: 16, sec: 0, pyq: false, topic: "Ranking",
+                q: "40 छात्रों की एक कक्षा में राम का स्थान ऊपर से 15वाँ है। नीचे से उसका स्थान क्या होगा?",
+                opts: ["25वाँ", "26वाँ", "24वाँ", "27वाँ"],
+                ans: 1,
+                exp: "नीचे से स्थान = (कुल छात्र - ऊपर से स्थान) + 1 = (40 - 15) + 1 = 26वाँ।"
+            },
+            {
+                id: 17, sec: 0, pyq: true, topic: "Dice",
+                q: "एक पासे की दो स्थितियाँ दर्शाई गई हैं। संख्या '3' के विपरीत फलक पर कौन-सी संख्या होगी?<br>पासा 1: (1, 2, 3) <br>पासा 2: (1, 5, 6)",
+                opts: ["4", "5", "6", "2"],
+                ans: 1,
+                exp: "समान अंक '1' से दक्षिणावर्त घूमने पर: 1->2->3 और 1->6->5। अतः 3 का विपरीत 5 है।"
+            },
+            {
+                id: 18, sec: 0, pyq: false, topic: "Analogy (Numbers)",
+                q: "उस संख्या युग्म को चुनिए जो समान संबंध दर्शाता है:<br><b>8 : 64 :: 11 : ?</b>",
+                opts: ["121", "1331", "110", "144"],
+                ans: 0,
+                exp: "8 का वर्ग = 64 है। इसी प्रकार 11 का वर्ग = 121 होगा।"
+            },
+            {
+                id: 19, sec: 0, pyq: true, topic: "Embedded Figures",
+                q: "दी गई उत्तर आकृतियों में से उसे चुनिए जिसमें प्रश्न आकृति निहित (Embedded) है।",
+                opts: ["विकल्प A", "विकल्प B", "विकल्प C", "विकल्प D"],
+                ans: 0,
+                exp: "विकल्प A में दी गई मूल रेखा-आकृति पूरी तरह बिना घुमाए समाहित है।"
+            },
+            {
+                id: 20, sec: 0, pyq: false, topic: "Statement & Conclusion",
+                q: "कथन: अत्यधिक वायु प्रदूषण से स्वास्थ्य संबंधी बीमारियाँ बढ़ रही हैं।<br>निष्कर्ष:<br>I. वायु प्रदूषण पर नियंत्रण पाना आवश्यक है।<br>II. केवल डॉक्टर ही इसका समाधान कर सकते हैं।",
+                opts: ["केवल I अनुसरण करता है", "केवल II अनुसरण करता है", "दोनों अनुसरण करते हैं", "कोई नहीं"],
+                ans: 0,
+                exp: "स्वास्थ्य सुधार के लिए प्रदूषण कम करना आवश्यक है। केवल डॉक्टर समाधान नहीं कर सकते, इसलिए II गलत है।"
+            },
+            {
+                id: 21, sec: 0, pyq: true, topic: "Classification (Letters)",
+                q: "दी गई श्रृंखला में अलग अक्षर समूह चुनें:<br><b>AZ, BY, CX, DW, GT</b>",
+                opts: ["AZ", "BY", "CX", "GT"],
+                ans: 3,
+                exp: "A-Z, B-Y, C-X, D-W विपरीत वर्ण युग्म हैं। G का विपरीत T होता है, पर क्रम के अनुसार यहाँ अगला EV होना चाहिए था।"
+            },
+            {
+                id: 22, sec: 0, pyq: false, topic: "Analogy (Word)",
+                q: "समान संबंध चुनें:<br><b>कार : गैराज :: हवाई जहाज : ?</b>",
+                opts: ["हवाई अड्डा", "हैंगर", "रनवे", "पायलट"],
+                ans: 1,
+                exp: "कार को गैराज में खड़ा किया जाता है, जबकि हवाई जहाज के खड़े करने/रखरखाव के स्थान को 'हैंगर' (Hangar) कहते हैं।"
+            },
+            {
+                id: 23, sec: 0, pyq: true, topic: "Number Puzzle",
+                q: "यदि 2 + 3 = 10, 3 + 4 = 21, 4 + 5 = 36 है, तो 5 + 6 = ?",
+                opts: ["55", "30", "11", "60"],
+                ans: 0,
+                exp: "पैटर्न: (पहला + दूसरा) × पहला = परिणाम।<br>(2+3)×2 = 10; (3+4)×3 = 21; (4+5)×4 = 36; (5+6)×5 = 55."
+            },
+            {
+                id: 24, sec: 0, pyq: false, topic: "Clock",
+                q: "घड़ी में 3:00 बजे घंटे और मिनट की सुइयों के बीच कितने डिग्री का कोण बनता है?",
+                opts: ["45°", "60°", "90°", "180°"],
+                ans: 2,
+                exp: "3:00 बजे मिनट की सुई 12 पर तथा घंटे की सुई 3 पर होती है, जो 3 x 30° = 90° का समकोण बनाती है।"
+            },
+            {
+                id: 25, sec: 0, pyq: true, topic: "Counting Figures",
+                q: "दी गई आकृति में कुल कितने त्रिभुज हैं? (मान लें एक साधारण 4-स्टार या वर्ग में दोनों विकर्ण बने हैं)",
+                opts: ["8", "10", "12", "16"],
+                ans: 0,
+                exp: "एक वर्ग जिसके दोनों विकर्ण आपस में काटते हैं, उसमें कुल 8 त्रिभुज बनते हैं (4 छोटे + 4 बड़े)।"
+            },
+
+            // --- SECTION 2: GENERAL AWARENESS (Q26 - Q50) ---
+            {
+                id: 26, sec: 1, pyq: true, topic: "Ancient History",
+                q: "हड़प्पा सभ्यता की खोज किस वर्ष की गई थी?",
+                opts: ["1921", "1932", "1942", "1911"],
+                ans: 0,
+                exp: "दयाराम साहनी ने 1921 में हड़प्पा सभ्यता (सिंधु घाटी सभ्यता) के स्थल हड़प्पा की खोज की थी।"
+            },
+            {
+                id: 27, sec: 1, pyq: false, topic: "Polity",
+                q: "भारतीय संविधान का कौन सा अनुच्छेद 'कानून के समक्ष समता' (Equality before Law) से संबंधित है?",
+                opts: ["अनुच्छेद 12", "अनुच्छेद 14", "अनुच्छेद 17", "अनुच्छेद 21"],
+                ans: 1,
+                exp: "अनुच्छेद 14 राज्य को भारत के क्षेत्र में किसी भी व्यक्ति को कानून के समक्ष समानता से वंचित न करने का अधिकार देता है।"
+            },
+            {
+                id: 28, sec: 1, pyq: true, topic: "Geography",
+                q: "भारत में सबसे लंबी नदी कौन सी है?",
+                opts: ["गोदावरी", "गंगा", "यमुना", "ब्रह्मपुत्र"],
+                ans: 1,
+                exp: "गंगा नदी (2,525 किमी) भारत की सबसे लंबी नदी है जो पूरी तरह देश के प्रमुख भूभाग में बहती है।"
+            },
+            {
+                id: 29, sec: 1, pyq: false, topic: "Economics",
+                q: "भारत में नीति आयोग (NITI Aayog) के अध्यक्ष कौन होते हैं?",
+                opts: ["राष्ट्रपति", "वित्त मंत्री", "प्रधानमंत्री", "गृह मंत्री"],
+                ans: 2,
+                exp: "भारत के प्रधानमंत्री पदेन (Ex-officio) नीति आयोग के अध्यक्ष होते हैं।"
+            },
+            {
+                id: 30, sec: 1, pyq: true, topic: "Physics",
+                q: "प्रकाश वर्ष (Light Year) किसकी इकाई है?",
+                opts: ["समय", "दूरी", "प्रकाश की तीव्रता", "द्रव्यमान"],
+                ans: 1,
+                exp: "प्रकाश वर्ष द्वारा एक वर्ष में तय की गई दूरी को मापा जाता है, अतः यह 'दूरी' की इकाई है।"
+            },
+            {
+                id: 31, sec: 1, pyq: false, topic: "Chemistry",
+                q: "साधारण नमक का रासायनिक नाम क्या है?",
+                opts: ["सोडियम क्लोराइड (NaCl)", "सोडियम कार्बोनेट", "सोडियम बाईकार्बोनेट", "कैल्शियम क्लोराइड"],
+                ans: 0,
+                exp: "साधारण नमक को रासायनिक रूप से सोडियम क्लोराइड (NaCl) कहा जाता है।"
+            },
+            {
+                id: 32, sec: 1, pyq: true, topic: "Biology",
+                q: "मानव शरीर की सबसे बड़ी ग्रंथि कौन सी है?",
+                opts: ["अग्न्याशय (Pancreas)", "यकृत (Liver)", "थायरॉइड", "पीयूष ग्रंथि"],
+                ans: 1,
+                exp: "यकृत (Liver) मानव शरीर की सबसे बड़ी ग्रंथि है जो पित्त (Bile) का स्राव करती है।"
+            },
+            {
+                id: 33, sec: 1, pyq: false, topic: "Modern History",
+                q: "1857 का विद्रोह भारत में कहाँ से शुरू हुआ था?",
+                opts: ["दिल्ली", "झांसी", "मेरठ", "कानपुर"],
+                ans: 2,
+                exp: "1857 का प्रथम स्वतंत्रता संग्राम 10 मई 1857 को मेरठ से शुरू हुआ था।"
+            },
+            {
+                id: 34, sec: 1, pyq: true, topic: "Polity",
+                q: "मौलिक अधिकारों का उल्लेख संविधान के किस भाग में किया गया है?",
+                opts: ["भाग I", "भाग II", "भाग III", "भाग IV"],
+                ans: 2,
+                exp: "भारतीय संविधान के भाग III (अनुच्छेद 12-35) में मौलिक अधिकारों का वर्णन है।"
+            },
+            {
+                id: 35, sec: 1, pyq: false, topic: "Geography",
+                q: "काजीरंगा राष्ट्रीय उद्यान किस राज्य में स्थित है?",
+                opts: ["असम", "पश्चिम बंगाल", "उत्तराखंड", "मध्य प्रदेश"],
+                ans: 0,
+                exp: "काजीरंगा राष्ट्रीय उद्यान असम में स्थित है, जो एक सींग वाले गैंडे के लिए प्रसिद्ध है।"
+            },
+            {
+                id: 36, sec: 1, pyq: true, topic: "Culture & Dance",
+                q: "'कथकली' किस राज्य का प्रसिद्ध शास्त्रीय नृत्य है?",
+                opts: ["तमिलनाडु", "केरल", "आंध्र प्रदेश", "कर्नाटक"],
+                ans: 1,
+                exp: "कथकली और मोहिनीअट्टम केरल राज्य के प्रसिद्ध शास्त्रीय नृत्य हैं।"
+            },
+            {
+                id: 37, sec: 1, pyq: false, topic: "Sports",
+                q: "'थॉमस कप' किस खेल से संबंधित है?",
+                opts: ["क्रिकेट", "फुटबॉल", "बैडमिंटन", "हॉकी"],
+                ans: 2,
+                exp: "थॉमस कप अंतरराष्ट्रीय पुरुष बैडमिंटन प्रतियोगिता से संबंधित है।"
+            },
+            {
+                id: 38, sec: 1, pyq: true, topic: "Medieval History",
+                q: "पानीपत की पहली लड़ाई (1526) किसके बीच लड़ी गई थी?",
+                opts: ["बाबर और इब्राहिम लोदी", "अकबर और हेमू", "हुमायूँ और शेरशाह", "अकबर और राणा सांगा"],
+                ans: 0,
+                exp: "21 अप्रैल 1526 को पानीपत के प्रथम युद्ध में बाबर ने इब्राहिम लोदी को हराकर मुगल साम्राज्य की नींव रखी थी।"
+            },
+            {
+                id: 39, sec: 1, pyq: false, topic: "General Science",
+                q: "विटामिन 'C' का सबसे समृद्ध स्रोत कौन सा है?",
+                opts: ["दूध", "आंवला", "सेब", "केला"],
+                ans: 1,
+                exp: "आंवला तथा खट्टे फल प्राकृतिक रूप से विटामिन C (एसकोर्बिक एसिड) के सबसे बड़े स्रोत हैं।"
+            },
+            {
+                id: 40, sec: 1, pyq: true, topic: "Books & Authors",
+                q: "पुस्तक 'विंग्स ऑफ फायर' (Wings of Fire) के लेखक कौन हैं?",
+                opts: ["डॉ. ए.पी.जे. अब्दुल कलाम", "जवाहरलाल नेहरू", "महात्मा गांधी", "रवींद्रनाथ टैगोर"],
+                ans: 0,
+                exp: "'विंग्स ऑफ फायर' भारत के पूर्व राष्ट्रपति डॉ. ए.पी.जे. अब्दुल कलाम की आत्मकथा है।"
+            },
+            {
+                id: 41, sec: 1, pyq: false, topic: "Geography",
+                q: "क्षेत्रफल की दृष्टि से भारत का सबसे बड़ा राज्य कौन सा है?",
+                opts: ["उत्तर प्रदेश", "मध्य प्रदेश", "राजस्थान", "महाराष्ट्र"],
+                ans: 2,
+                exp: "क्षेत्रफल के आधार पर राजस्थान (342,239 वर्ग किमी) भारत का सबसे बड़ा राज्य है।"
+            },
+            {
+                id: 42, sec: 1, pyq: true, topic: "Polity",
+                q: "भारत के राष्ट्रपति को पद की शपथ कौन दिलाता है?",
+                opts: ["उपराष्ट्रपति", "प्रधानमंत्री", "भारत के मुख्य न्यायाधीश (CJI)", "लोकसभा अध्यक्ष"],
+                ans: 2,
+                exp: "अनुच्छेद 60 के तहत भारत के सर्वोच्च न्यायालय के मुख्य न्यायाधीश (CJI) राष्ट्रपति को शपथ दिलाते हैं।"
+            },
+            {
+                id: 43, sec: 1, pyq: false, topic: "Physics",
+                q: "ध्वनि की गति अधिकतम किस माध्यम में होती है?",
+                opts: ["वायु", "जल", "ठोस (इस्पात/Steel)", "निर्वात (Vacuum)"],
+                ans: 2,
+                exp: "ध्वनि तरंगें अनुदैर्ध्य (longitudinal) होती हैं और इनकी गति ठोस माध्यम में सबसे अधिक होती है।"
+            },
+            {
+                id: 44, sec: 1, pyq: true, topic: "Environment",
+                q: "ओज़ोन परत वायुमंडल की किस परत में पाई जाती है?",
+                opts: ["क्षोभमंडल (Troposphere)", "समतापमंडल (Stratosphere)", "मध्यमंडल (Mesosphere)", "बायोस्फीयर"],
+                ans: 1,
+                exp: "ओज़ोन परत समतापमंडल (Stratosphere) में पाई जाती है, जो पराबैंगनी किरणों से रक्षा करती है।"
+            },
+            {
+                id: 45, sec: 1, pyq: false, topic: "Static GK",
+                q: "अंतर्राष्ट्रीय न्यायालय (ICJ) का मुख्यालय कहाँ स्थित है?",
+                opts: ["जेनेवा", "पेरिस", "द हेग (The Hague)", "न्यूयार्क"],
+                ans: 2,
+                exp: "अंतर्राष्ट्रीय न्यायालय का मुख्यालय नीदरलैंड के 'द हेग' शहर में स्थित है।"
+            },
+            {
+                id: 46, sec: 1, pyq: true, topic: "Economics",
+                q: "रिजर्व बैंक ऑफ इंडिया (RBI) का राष्ट्रीयकरण किस वर्ष हुआ था?",
+                opts: ["1935", "1947", "1949", "1950"],
+                ans: 2,
+                exp: "RBI की स्थापना 1 अप्रैल 1935 को हुई थी, जबकि इसका राष्ट्रीयकरण 1 जनवरी 1949 को किया गया था।"
+            },
+            {
+                id: 47, sec: 1, pyq: false, topic: "Modern History",
+                q: "'भारत छोड़ो आंदोलन' (Quit India Movement) किस वर्ष शुरू हुआ था?",
+                opts: ["1920", "1930", "1942", "1945"],
+                ans: 2,
+                exp: "महात्मा गांधी ने अगस्त 1942 में 'करो या मरो' नारे के साथ भारत छोड़ो आंदोलन शुरू किया था।"
+            },
+            {
+                id: 48, sec: 1, pyq: true, topic: "Biology",
+                q: "रक्त का थक्का जमने (Blood Clotting) में कौन सा विटामिन सहायक होता है?",
+                opts: ["विटामिन A", "विटामिन B", "विटामिन D", "विटामिन K"],
+                ans: 3,
+                exp: "विटामिन K रक्त के जमने (स्कंदन) के लिए आवश्यक प्रोथ्रोम्बिन बनाने में मदद करता है।"
+            },
+            {
+                id: 49, sec: 1, pyq: false, topic: "Polity",
+                q: "संविधान सभा की प्रारूप समिति (Drafting Committee) के अध्यक्ष कौन थे?",
+                opts: ["डॉ. राजेन्द्र प्रसाद", "डॉ. बी.आर. अम्बेडकर", "सच्चिदानंद सिन्हा", "जवाहरलाल नेहरू"],
+                ans: 1,
+                exp: "डॉ. बी.आर. अम्बेडकर संविधान सभा की प्रारूप समिति के अध्यक्ष थे।"
+            },
+            {
+                id: 50, sec: 1, pyq: true, topic: "Geography",
+                q: "भाखड़ा नांगल बांध किस नदी पर निर्मित है?",
+                opts: ["सतलज नदी", "रावी नदी", "व्यास नदी", "झेलम नदी"],
+                ans: 0,
+                exp: "भाखड़ा नांगल बांध हिमाचल प्रदेश/पंजाब में सतलज नदी पर बना बहुउद्देशीय बाँध है।"
+            },
+
+            // --- SECTION 3: QUANTITATIVE APTITUDE (Matriculation) (Q51 - Q75) ---
+            {
+                id: 51, sec: 2, pyq: true, topic: "Simplification",
+                q: "सरल कीजिए:<br><b>$$25 + [15 - \{12 \div (6 - 2)\}]$$</b>",
+                opts: ["37", "35", "32", "40"],
+                ans: 0,
+                exp: "BODMAS नियम से:<br>(6-2) = 4<br>12 ÷ 4 = 3<br>15 - 3 = 12<br>25 + 12 = 37."
+            },
+            {
+                id: 52, sec: 2, pyq: false, topic: "Percentage",
+                q: "यदि किसी संख्या का 20% भाग 120 के बराबर है, तो उस संख्या का 120% कितना होगा?",
+                opts: ["600", "720", "480", "800"],
+                ans: 1,
+                exp: "संख्या x = (120 × 100) / 20 = 600.<br>संख्या का 120% = 600 × 1.2 = 720."
+            },
+            {
+                id: 53, sec: 2, pyq: true, topic: "Ratio & Proportion",
+                q: "यदि A : B = 2 : 3 तथा B : C = 4 : 5 है, तो A : B : C ज्ञात कीजिए।",
+                opts: ["8 : 12 : 15", "6 : 8 : 10", "2 : 4 : 5", "8 : 10 : 15"],
+                ans: 0,
+                exp: "A : B = 8 : 12, B : C = 12 : 15.<br>अतः A : B : C = 8 : 12 : 15."
+            },
+            {
+                id: 54, sec: 2, pyq: false, topic: "Profit & Loss",
+                q: "एक वस्तु को ₹450 में बेचने पर 10% की हानि होती है। 20% का लाभ कमाने के लिए इसे किस मूल्य पर बेचा जाना चाहिए?",
+                opts: ["₹500", "₹600", "₹550", "₹650"],
+                ans: 1,
+                exp: "क्रय मूल्य (CP) = 450 / 0.90 = ₹500.<br>20% लाभ पर विक्रय मूल्य = 500 × 1.20 = ₹600."
+            },
+            {
+                id: 55, sec: 2, pyq: true, topic: "Simple Interest",
+                q: "₹5000 की राशि पर 8% वार्षिक साधारण ब्याज की दर से 3 वर्ष का ब्याज कितना होगा?",
+                opts: ["₹1000", "₹1200", "₹1500", "₹800"],
+                ans: 1,
+                exp: "SI = (P × R × T) / 100 = (5000 × 8 × 3) / 100 = ₹1200."
+            },
+            {
+                id: 56, sec: 2, pyq: false, topic: "Average",
+                q: "प्रथम 5 प्राकृतिक संख्याओं का औसत क्या होगा?",
+                opts: ["2.5", "3", "3.5", "4"],
+                ans: 1,
+                exp: "संख्याएँ: 1, 2, 3, 4, 5.<br>योग = 15; औसत = 15 / 5 = 3."
+            },
+            {
+                id: 57, sec: 2, pyq: true, topic: "Time & Work",
+                q: "A किसी काम को 10 दिनों में और B उसी काम को 15 दिनों में कर सकता है। दोनों मिलकर काम को कितने दिनों में पूरा करेंगे?",
+                opts: ["5 दिन", "6 दिन", "8 दिन", "7.5 दिन"],
+                ans: 1,
+                exp: "कुल काम = L.C.M(10, 15) = 30 इकाई।<br>A की क्षमता = 3, B की क्षमता = 2.<br>समय = 30 / (3+2) = 6 दिन।"
+            },
+            {
+                id: 58, sec: 2, pyq: false, topic: "Speed Time Distance",
+                q: "एक ट्रेन 72 किमी/घंटे की चाल से चल रही है। इसकी चाल मीटर/सेकंड (m/s) में कितनी होगी?",
+                opts: ["15 m/s", "20 m/s", "25 m/s", "30 m/s"],
+                ans: 1,
+                exp: "m/s में बदलने के लिए 5/18 से गुणा करें:<br>72 × (5/18) = 20 m/s."
+            },
+            {
+                id: 59, sec: 2, pyq: true, topic: "LCM & HCF",
+                q: "12, 18 और 24 का लघुत्तम समापवर्त्य (LCM) ज्ञात कीजिए।",
+                opts: ["36", "48", "72", "108"],
+                ans: 2,
+                exp: "12, 18 और 24 से विभाजित होने वाली न्यूनतम संख्या 72 है।"
+            },
+            {
+                id: 60, sec: 2, pyq: false, topic: "Mensuration (2D)",
+                q: "एक आयत की लंबाई 10 सेमी और चौड़ाई 8 सेमी है। इसका क्षेत्रफल और परिमाप क्या होगा?",
+                opts: ["80 सेमी², 36 सेमी", "80 सेमी², 18 सेमी", "40 सेमी², 36 सेमी", "80 सेमी², 32 सेमी"],
+                ans: 0,
+                exp: "क्षेत्रफल = L × B = 10 × 8 = 80 सेमी²।<br>परिमाप = 2(L + B) = 2(10 + 8) = 36 सेमी।"
+            },
+            {
+                id: 61, sec: 2, pyq: true, topic: "Discount",
+                q: "एक वस्तु का अंकित मूल्य ₹1000 है। इस पर 20% की छूट दी जाती है। विक्रय मूल्य क्या होगा?",
+                opts: ["₹700", "₹800", "₹850", "₹900"],
+                ans: 1,
+                exp: "छूट = 1000 का 20% = ₹200.<br>विक्रय मूल्य = 1000 - 200 = ₹800."
+            },
+            {
+                id: 62, sec: 2, pyq: false, topic: "Compound Interest",
+                q: "₹10,000 की राशि पर 10% वार्षिक चक्रवृध्दि ब्याज की दर से 2 वर्ष का चक्रवृध्दि ब्याज (CI) कितना होगा?",
+                opts: ["₹2000", "₹2100", "₹2200", "₹2500"],
+                ans: 1,
+                exp: "2 वर्ष का मिश्रधन = 10000 × (1.10)² = 12100.<br>ब्याज = 12100 - 10000 = ₹2100."
+            },
+            {
+                id: 63, sec: 2, pyq: true, topic: "Number System",
+                q: "निम्नलिखित में से कौन-सी संख्या अभाज्य (Prime) है?",
+                opts: ["91", "87", "97", "81"],
+                ans: 2,
+                exp: "91 (13×7), 87 (29×3), 81 (9×9) भाज्य हैं। 97 केवल 1 और स्वयं से विभाजित होती है, अतः अभाज्य है।"
+            },
+            {
+                id: 64, sec: 2, pyq: false, topic: "Algebra Basics",
+                q: "यदि $$x + y = 10$$ और $$x - y = 4$$ है, तो $$x$$ का मान क्या होगा?",
+                opts: ["7", "3", "6", "8"],
+                ans: 0,
+                exp: "दोनों समीकरणों को जोड़ने पर:<br>2x = 14 => x = 7."
+            },
+            {
+                id: 65, sec: 2, pyq: true, topic: "Decimals & Fractions",
+                q: "$$\\frac{3}{4} + \\frac{2}{5}$$ का मान क्या होगा?",
+                opts: ["$$\\frac{23}{20}$$", "$$\\frac{5}{9}$$", "$$\\frac{1}{2}$$", "$$\\frac{12}{20}$$"],
+                ans: 0,
+                exp: "हर का LCM = 20.<br>(15 + 8) / 20 = 23/20."
+            },
+            {
+                id: 66, sec: 2, pyq: false, topic: "Mensuration (3D)",
+                q: "एक घन (Cube) की भुजा 5 सेमी है। इसका आयतन (Volume) कितना होगा?",
+                opts: ["100 सेमी³", "125 सेमी³", "150 सेमी³", "25 सेमी³"],
+                ans: 1,
+                exp: "घन का आयतन = (भुजा)³ = 5³ = 125 सेमी³।"
+            },
+            {
+                id: 67, sec: 2, pyq: true, topic: "Data Interpretation",
+                q: "यदि 5 विषयों में एक छात्र द्वारा प्राप्त अंक क्रमश: 60, 70, 80, 90 और 50 हैं, तो अंकों का माध्य (Mean) क्या है?",
+                opts: ["70", "75", "65", "80"],
+                ans: 0,
+                exp: "कुल योग = 60+70+80+90+50 = 350.<br>माध्य = 350 / 5 = 70."
+            },
+            {
+                id: 68, sec: 2, pyq: false, topic: "Speed Distance",
+                q: "एक व्यक्ति 150 मीटर लंबी सड़क को 25 सेकंड में पार करता है। उसकी चाल किमी/घंटा में क्या होगी?",
+                opts: ["21.6 km/h", "18 km/h", "25 km/h", "15 km/h"],
+                ans: 0,
+                exp: "चाल = 150 / 25 = 6 m/s.<br>किमी/घंटा में: 6 × (18/5) = 21.6 km/h."
+            },
+            {
+                id: 69, sec: 2, pyq: true, topic: "Partnership",
+                q: "A और B क्रमशः ₹20,000 और ₹30,000 लगाकर व्यापार शुरू करते हैं। वर्ष के अंत में ₹10,000 के लाभ में A का हिस्सा कितना होगा?",
+                opts: ["₹4000", "₹6000", "₹5000", "₹3000"],
+                ans: 0,
+                exp: "निवेश अनुपात = 20000 : 30000 = 2 : 3.<br>A का हिस्सा = 10000 × (2 / 5) = ₹4000."
+            },
+            {
+                id: 70, sec: 2, pyq: false, topic: "Percentage",
+                q: "एक परीक्षा में उत्तीर्ण होने के लिए 36% अंक चाहिए। यदि एक छात्र 145 अंक लाता है और 35 अंकों से अनुत्तीर्ण हो जाता है, तो कुल अधिकतम अंक ज्ञात करें।",
+                opts: ["500", "450", "600", "400"],
+                ans: 0,
+                exp: "उत्तीर्णांक = 145 + 35 = 180.<br>कुल अंक का 36% = 180 => कुल अंक = (180 / 36) × 100 = 500."
+            },
+            {
+                id: 71, sec: 2, pyq: true, topic: "Pipe & Cistern",
+                q: "नल A एक टंकी को 4 घंटे में भर सकता है तथा नल B इसे 6 घंटे में खाली कर सकता है। दोनों नल एक साथ खोलने पर टंकी कितने समय में भरेगी?",
+                opts: ["12 घंटे", "10 घंटे", "8 घंटे", "15 घंटे"],
+                ans: 0,
+                exp: "1 घंटे में भरा गया भाग = (1/4) - (1/6) = (3 - 2)/12 = 1/12.<br>अतः टंकी 12 घंटे में पूरी भरेगी।"
+            },
+            {
+                id: 72, sec: 2, pyq: false, topic: "Averages",
+                q: "10 संख्याओं का औसत 15 है। यदि प्रत्येक संख्या में 3 जोड़ दिया जाए, तो नया औसत क्या होगा?",
+                opts: ["18", "15", "45", "12"],
+                ans: 0,
+                exp: "यदि प्रत्येक संख्या में समान मान जोड़ा जाता है, तो नया औसत = पुराना औसत + जोड़ी गई संख्या = 15 + 3 = 18."
+            },
+            {
+                id: 73, sec: 2, pyq: true, topic: "Square Root",
+                q: "$$\\sqrt{176 + \\sqrt{2401}}$$ का मान ज्ञात कीजिए।",
+                opts: ["15", "14", "16", "22"],
+                ans: 0,
+                exp: "$$\\sqrt{2401} = 49$$.<br>$$176 + 49 = 225$$.<br>$$\\sqrt{225} = 15$$."
+            },
+            {
+                id: 74, sec: 2, pyq: false, topic: "Mixture & Alligation",
+                q: "₹20 प्रति किग्रा और ₹30 प्रति किग्रा वाले चावल को किस अनुपात में मिलाया जाए कि मिश्रण का मूल्य ₹24 प्रति किग्रा हो जाए?",
+                opts: ["3 : 2", "2 : 3", "1 : 2", "4 : 1"],
+                ans: 0,
+                exp: "Alligation नियम से:<br>(30 - 24) : (24 - 20) = 6 : 4 = 3 : 2."
+            },
+            {
+                id: 75, sec: 2, pyq: true, topic: "Mensuration Circle",
+                q: "एक वृत्त की त्रिज्या 7 सेमी है। इसका परिधि (Circumference) ज्ञात कीजिए। (π = 22/7 लें)",
+                opts: ["44 सेमी", "154 सेमी", "88 सेमी", "22 सेमी"],
+                ans: 0,
+                exp: "परिधि = 2πr = 2 × (22/7) × 7 = 44 सेमी।"
+            },
+
+            // --- SECTION 4: ENGLISH LANGUAGE (Q76 - Q100) ---
+            {
+                id: 76, sec: 3, pyq: true, topic: "Synonyms",
+                q: "Select the most appropriate <b>SYNONYM</b> of the given word:<br><b>ABANDON</b>",
+                opts: ["Forsake", "Keep", "Adopt", "Cherish"],
+                ans: 0,
+                exp: "'Abandon' means to leave completely or desert. 'Forsake' is its exact synonym."
+            },
+            {
+                id: 77, sec: 3, pyq: false, topic: "Antonyms",
+                q: "Select the most appropriate <b>ANTONYM</b> of the given word:<br><b>ANCIENT</b>",
+                opts: ["Old", "Modern", "Historic", "Aged"],
+                ans: 1,
+                exp: "'Ancient' means belonging to the very distant past. Its opposite is 'Modern'."
+            },
+            {
+                id: 78, sec: 3, pyq: true, topic: "Spotting Errors",
+                q: "Identify the segment in the sentence which contains a grammatical error:<br><b>She do not like to watch movies on weekdays.</b>",
+                opts: ["She do not", "like to watch", "movies on", "weekdays"],
+                ans: 0,
+                exp: "Third-person singular 'She' takes 'does not' instead of 'do not'. Correct segment is 'She does not'."
+            },
+            {
+                id: 79, sec: 3, pyq: false, topic: "One Word Substitution",
+                q: "Select the word which means the same as the group of words given:<br><b>A person who looks at the bright side of things</b>",
+                opts: ["Pessimist", "Optimist", "Atheist", "Egotist"],
+                ans: 1,
+                exp: "An 'Optimist' is a hopeful person who looks at positive aspects."
+            },
+            {
+                id: 80, sec: 3, pyq: true, topic: "Idioms & Phrases",
+                q: "Select the correct meaning of the given idiom:<br><b>Once in a blue moon</b>",
+                opts: ["Very frequently", "Very rarely", "On a full moon night", "Never"],
+                ans: 1,
+                exp: "The idiom 'Once in a blue moon' means an event that happens very rarely."
+            },
+            {
+                id: 81, sec: 3, pyq: false, topic: "Spelling Test",
+                q: "Select the <b>CORRECTLY</b> spelt word:",
+                opts: ["Recieve", "Receive", "Receeve", "Ricieve"],
+                ans: 1,
+                exp: "The correct spelling is 'Receive' (Rule: 'I' before 'E' except after 'C')."
+            },
+            {
+                id: 82, sec: 3, pyq: true, topic: "Fill in the Blanks",
+                q: "Select the most appropriate option to fill in the blank:<br><b>The teacher distributed the sweets ______ the students.</b>",
+                opts: ["between", "among", "with", "into"],
+                ans: 1,
+                exp: "Use 'between' for two items/persons, and 'among' for more than two students."
+            },
+            {
+                id: 83, sec: 3, pyq: false, topic: "Sentence Improvement",
+                q: "Improve the underlined part of the sentence:<br>He is <u>more taller than</u> his brother.",
+                opts: ["taller than", "tallest than", "more tall than", "No improvement"],
+                ans: 0,
+                exp: "Double comparatives ('more taller') are incorrect in English grammar. Simply use 'taller than'."
+            },
+            {
+                id: 84, sec: 3, pyq: true, topic: "Synonyms",
+                q: "Select the most appropriate <b>SYNONYM</b> of the word:<br><b>CANDID</b>",
+                opts: ["Frank", "Secretive", "Shy", "Cunning"],
+                ans: 0,
+                exp: "'Candid' means truthful, straightforward, or frank."
+            },
+            {
+                id: 85, sec: 3, pyq: false, topic: "Antonyms",
+                q: "Select the most appropriate <b>ANTONYM</b> of the word:<br><b>EXPAND</b>",
+                opts: ["Contract", "Enlarge", "Extend", "Spread"],
+                ans: 0,
+                exp: "'Expand' means to become larger. Its opposite is 'Contract' (to shrink)."
+            },
+            {
+                id: 86, sec: 3, pyq: true, topic: "One Word Substitution",
+                q: "Select the word for:<br><b>A place where books are kept</b>",
+                opts: ["Museum", "Library", "Auditorium", "Zoo"],
+                ans: 1,
+                exp: "A 'Library' is a building or room containing collections of books."
+            },
+            {
+                id: 87, sec: 3, pyq: false, topic: "Idioms & Phrases",
+                q: "Meaning of idiom:<br><b>To spill the beans</b>",
+                opts: ["To drop food", "To reveal a secret", "To work hard", "To waste money"],
+                ans: 1,
+                exp: "'To spill the beans' means to disclose secret information prematurely or unintentionally."
+            },
+            {
+                id: 88, sec: 3, pyq: true, topic: "Fill in the Blanks",
+                q: "Fill in the blank:<br><b>Honesty is ______ best policy.</b>",
+                opts: ["a", "an", "the", "No article"],
+                ans: 2,
+                exp: "Superlative degrees of adjectives ('best') take the definite article 'the'."
+            },
+            {
+                id: 89, sec: 3, pyq: false, topic: "Spotting Errors",
+                q: "Find the error segment:<br><b>Each of the boys have completed their homework.</b>",
+                opts: ["Each of the boys", "have completed", "their homework", "No error"],
+                ans: 1,
+                exp: "'Each' is a singular subject and must take a singular verb ('has completed')."
+            },
+            {
+                id: 90, sec: 3, pyq: true, topic: "Spelling Test",
+                q: "Select the <b>INCORRECTLY</b> spelt word:",
+                opts: ["Definite", "Separate", "Grammer", "Accommodation"],
+                ans: 2,
+                exp: "The correct spelling is 'Grammar' (ending with -ar, not -er)."
+            },
+            {
+                id: 91, sec: 3, pyq: false, topic: "Active & Passive Voice",
+                q: "Select the passive form:<br><b>Raman opened the door.</b>",
+                opts: ["The door is opened by Raman.", "The door was opened by Raman.", "The door had opened by Raman.", "The door was open by Raman."],
+                ans: 1,
+                exp: "Simple Past ('opened') changes to 'was/were + V3' ('was opened') in passive voice."
+            },
+            {
+                id: 92, sec: 3, pyq: true, topic: "Direct & Indirect Speech",
+                q: "Select the indirect form:<br><b>He said, \"I am going to market.\"</b>",
+                opts: ["He said that he was going to market.", "He said that I am going to market.", "He said that he is going to market.", "He told he was going."],
+                ans: 0,
+                exp: "Present continuous ('am going') changes to Past continuous ('was going') and 'I' changes to 'he'."
+            },
+            {
+                id: 93, sec: 3, pyq: false, topic: "Synonyms",
+                q: "Select the synonym of:<br><b>BENEFICIAL</b>",
+                opts: ["Harmful", "Advantageous", "Useless", "Worthless"],
+                ans: 1,
+                exp: "'Beneficial' means producing good results or helpful; synonym is 'Advantageous'."
+            },
+            {
+                id: 94, sec: 3, pyq: true, topic: "Antonyms",
+                q: "Select the antonym of:<br><b>ARROGANT</b>",
+                opts: ["Humble", "Proud", "Haughty", "Rude"],
+                ans: 0,
+                exp: "'Arrogant' means having an exaggerated sense of self-importance. Its opposite is 'Humble'."
+            },
+            {
+                id: 95, sec: 3, pyq: false, topic: "Idioms & Phrases",
+                q: "Select the meaning of:<br><b>At the eleventh hour</b>",
+                opts: ["At 11 o'clock", "At the last possible moment", "Very early morning", "In the midnight"],
+                ans: 1,
+                exp: "'At the eleventh hour' means happening at the latest possible time before it's too late."
+            },
+            // Cloze Test Passages Q96-Q100
+            {
+                id: 96, sec: 3, pyq: true, topic: "Cloze Test",
+                q: "<b>Comprehension:</b> Read the passage and choose the correct option for blank <b>(1)</b>.<br><br><i>Water is one of the most (1)______ natural resources on Earth. Without water, life (2)______ not exist. We must (3)______ every drop of water and avoid wastage. Trees also play a (4)______ role in bringing rain and maintaining water levels (5)______ the soil.</i><br><br>Select option for blank (1):",
+                opts: ["precious", "cheap", "useless", "ordinary"],
+                ans: 0,
+                exp: "Water is vital for living beings, making it a 'precious' natural resource."
+            },
+            {
+                id: 97, sec: 3, pyq: true, topic: "Cloze Test",
+                q: "Select option for blank <b>(2)</b> in the passage above:",
+                opts: ["can", "would", "shall", "is"],
+                ans: 1,
+                exp: "Hypothetical condition ('Without water...') takes 'would not exist'."
+            },
+            {
+                id: 98, sec: 3, pyq: true, topic: "Cloze Test",
+                q: "Select option for blank <b>(3)</b> in the passage above:",
+                opts: ["save", "waste", "destroy", "pollute"],
+                ans: 0,
+                exp: "The context requires positive action against wastage, which is to 'save' water."
+            },
+            {
+                id: 99, sec: 3, pyq: true, topic: "Cloze Test",
+                q: "Select option for blank <b>(4)</b> in the passage above:",
+                opts: ["crucial", "minor", "negligible", "bad"],
+                ans: 0,
+                exp: "Trees play an essential or 'crucial' role in environmental cycles."
+            },
+            {
+                id: 100, sec: 3, pyq: true, topic: "Cloze Test",
+                q: "Select option for blank <b>(5)</b> in the passage above:",
+                opts: ["under", "in", "above", "on"],
+                ans: 1,
+                exp: "Water levels are maintained 'in' the soil."
+            }
+        ];
+
+        // State Variables
+        let currentSection = 0;
+        let currentQuestionIndex = 0; // 0 to 24 within section
+        let userAnswers = new Array(100).fill(null); // stores option index (0,1,2,3)
+        let userStatus = new Array(100).fill('not-visited'); // 'not-visited', 'not-answered', 'answered', 'marked', 'marked-answered'
+        let timerSeconds = 3600; // 60 minutes
+        let timerInterval = null;
+
+        const sectionNames = [
+            "General Intelligence & Reasoning",
+            "General Awareness",
+            "Quantitative Aptitude",
+            "English Language"
+        ];
+
+        function startTest() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('exam-interface').classList.remove('hidden');
+            document.getElementById('exam-interface').classList.add('flex');
+            
+            // Mark question 0 visited
+            if(userStatus[0] === 'not-visited') userStatus[0] = 'not-answered';
+
+            renderQuestion();
+            renderPalette();
+            startTimer();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                let m = Math.floor(timerSeconds / 60);
+                let s = timerSeconds % 60;
+                document.getElementById('timer').innerText = 
+                    `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("समय समाप्त हो गया है! आपका टेस्ट स्वतः सबमिट हो रहा है।");
+                    submitTest();
+                }
+            }, 1000);
+        }
+
+        function getGlobalIndex(sec, qIdx) {
+            return sec * 25 + qIdx;
+        }
+
+        function switchSection(secIdx) {
+            currentSection = secIdx;
+            currentQuestionIndex = 0;
+            
+            // Update active section tab styles
+            for(let i=0; i<4; i++) {
+                let btn = document.getElementById(`sec-btn-${i}`);
+                if(i === secIdx) {
+                    btn.className = "py-3 px-4 border-b-2 border-blue-600 text-blue-600 font-bold whitespace-nowrap";
+                } else {
+                    btn.className = "py-3 px-4 border-b-2 border-transparent text-slate-600 hover:text-slate-900 whitespace-nowrap";
+                }
+            }
+
+            let gIdx = getGlobalIndex(currentSection, currentQuestionIndex);
+            if(userStatus[gIdx] === 'not-visited') {
+                userStatus[gIdx] = 'not-answered';
+            }
+
+            renderQuestion();
+            renderPalette();
+        }
+
+        function renderQuestion() {
+            let gIdx = getGlobalIndex(currentSection, currentQuestionIndex);
+            let qData = mockData[gIdx];
+
+            // Set Header Number & PYQ
+            document.getElementById('q-num-display').innerText = `प्रश्न ${gIdx + 1}:`;
+            let pyqTag = document.getElementById('pyq-tag');
+            if (qData.pyq) {
+                pyqTag.classList.remove('hidden');
+            } else {
+                pyqTag.classList.add('hidden');
+            }
+
+            // Text
+            document.getElementById('question-text').innerHTML = qData.q;
+
+            // Options
+            let optsContainer = document.getElementById('options-container');
+            optsContainer.innerHTML = '';
+
+            const optLabels = ['A', 'B', 'C', 'D'];
+            qData.opts.forEach((optText, idx) => {
+                let isSelected = (userAnswers[gIdx] === idx);
+                let optDiv = document.createElement('div');
+                optDiv.onclick = () => selectOption(idx);
+                optDiv.className = `p-4 border-2 rounded-xl cursor-pointer transition flex items-center gap-3 ${
+                    isSelected 
+                    ? 'border-blue-600 bg-blue-50 text-blue-900 font-semibold shadow-sm' 
+                    : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700'
+                }`;
+
+                optDiv.innerHTML = `
+                    <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center font-bold text-xs ${
+                        isSelected ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 text-slate-500'
+                    }">
+                        ${optLabels[idx]}
+                    </div>
+                    <div class="text-base">${optText}</div>
+                `;
+                optsContainer.appendChild(optDiv);
+            });
+
+            // Update Prev button state
+            document.getElementById('prev-btn').disabled = (gIdx === 0);
+            if(gIdx === 0) {
+                document.getElementById('prev-btn').classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                document.getElementById('prev-btn').classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function selectOption(optIdx) {
+            let gIdx = getGlobalIndex(currentSection, currentQuestionIndex);
+            userAnswers[gIdx] = optIdx;
+            
+            if (userStatus[gIdx] === 'marked') {
+                userStatus[gIdx] = 'marked-answered';
+            } else {
+                userStatus[gIdx] = 'answered';
+            }
+
+            renderQuestion();
+            renderPalette();
+        }
+
+        function clearResponse() {
+            let gIdx = getGlobalIndex(currentSection, currentQuestionIndex);
+            userAnswers[gIdx] = null;
+            userStatus[gIdx] = 'not-answered';
+            renderQuestion();
+            renderPalette();
+        }
+
+        function markForReview() {
+            let gIdx = getGlobalIndex(currentSection, currentQuestionIndex);
+            if (userAnswers[gIdx] !== null) {
+                userStatus[gIdx] = 'marked-answered';
+            } else {
+                userStatus[gIdx] = 'marked';
+            }
+            saveAndNext();
+        }
+
+        function saveAndNext() {
+            let gIdx = getGlobalIndex(currentSection, currentQuestionIndex);
+            
+            // If not answered & not marked, make it not-answered
+            if (userAnswers[gIdx] === null && userStatus[gIdx] !== 'marked') {
+                userStatus[gIdx] = 'not-answered';
+            }
+
+            if (currentQuestionIndex < 24) {
+                currentQuestionIndex++;
+            } else if (currentSection < 3) {
+                switchSection(currentSection + 1);
+                return;
+            }
+
+            let nextGIdx = getGlobalIndex(currentSection, currentQuestionIndex);
+            if (userStatus[nextGIdx] === 'not-visited') {
+                userStatus[nextGIdx] = 'not-answered';
+            }
+
+            renderQuestion();
+            renderPalette();
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+            } else if (currentSection > 0) {
+                currentSection--;
+                currentQuestionIndex = 24;
+                switchSection(currentSection);
+                return;
+            }
+
+            let prevGIdx = getGlobalIndex(currentSection, currentQuestionIndex);
+            if (userStatus[prevGIdx] === 'not-visited') {
+                userStatus[prevGIdx] = 'not-answered';
+            }
+
+            renderQuestion();
+            renderPalette();
+        }
+
+        function renderPalette() {
+            let grid = document.getElementById('palette-grid');
+            grid.innerHTML = '';
+
+            for (let i = 0; i < 25; i++) {
+                let gIdx = getGlobalIndex(currentSection, i);
+                let st = userStatus[gIdx];
+                let btn = document.createElement('button');
+                btn.innerText = i + 1;
+                btn.onclick = () => jumpToQuestion(i);
+
+                let baseClass = "w-9 h-9 font-bold text-xs flex items-center justify-center transition border ";
+                
+                if (i === currentQuestionIndex) {
+                    baseClass += "ring-2 ring-offset-1 ring-blue-600 ";
+                }
+
+                if (st === 'answered') {
+                    baseClass += "q-status-answered border-green-600";
+                } else if (st === 'not-answered') {
+                    baseClass += "q-status-not-answered border-red-500";
+                } else if (st === 'marked') {
+                    baseClass += "q-status-marked border-purple-600";
+                } else if (st === 'marked-answered') {
+                    baseClass += "q-status-marked-answered border-purple-600";
+                } else {
+                    baseClass += "q-status-not-visited border-gray-300";
+                }
+
+                btn.className = baseClass;
+                grid.appendChild(btn);
+            }
+        }
+
+        function jumpToQuestion(qIdx) {
+            currentQuestionIndex = qIdx;
+            let gIdx = getGlobalIndex(currentSection, currentQuestionIndex);
+            if (userStatus[gIdx] === 'not-visited') {
+                userStatus[gIdx] = 'not-answered';
+            }
+            renderQuestion();
+            renderPalette();
+        }
+
+        function confirmSubmit() {
+            let countAnswered = userAnswers.filter(a => a !== null).length;
+            let countSkipped = 100 - countAnswered;
+        }
+    </script>
+</body>
+</html>
